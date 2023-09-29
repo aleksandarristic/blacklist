@@ -1,6 +1,7 @@
 # Various scam websites targeting serbian internet users
 # list initialy collected by https://twitter.com/milos_rs_
 # Useable as a pihole list
+# More info at https://bezbedanbalkan.net/thread-835.html
 
 lowaonlinesrbija.com
 loakesrbijastore.com
@@ -77,3 +78,36 @@ desigualsrbija.net
 americantouristersrbija.com
 bimbaylolasrbija.com
 neweracapsrbija.com
+batasrbijas.com
+novestasrbija.com
+thebridgesrbija.com
+uggoutletsrbija.com
+uggonlinesrbija.com
+vivobarefootsrbija.net
+mammut-srbija.com
+josefseibelsrbija.com
+antonymoratosrbija.com
+lottoserbia.org
+bikboksrbija.com
+maxandcosrbija.com
+marksandspencersrbija.com
+gaborsrbija.com
+intimissimisrbija.net
+ecco-serbia.com
+rickowenssrbija.com
+dcshoes-srbija.com
+salewacipelesrbija.com
+allstarsrbija.com
+florsheimsrbija.com
+salomonsrbijaonline.com
+scotchandsodasrbija.net
+10daysclothingsrbija.com
+aquataliasrbija.com
+tigerofswedensrbija.com
+umbro-srbija.com
+ashsrbija.com
+loakesrbijastore.com
+baredsrbija.com
+patriotssrbija.com
+superdrysrbijashop.com
+betseyjohnsonsrbija.com
