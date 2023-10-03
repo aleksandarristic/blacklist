@@ -1,6 +1,5 @@
-# Various scam websites targeting serbian internet users
+### Scam domains start
 # list initialy collected by https://twitter.com/milos_rs_
-# Useable as a pihole list
 # More info at https://bezbedanbalkan.net/thread-835.html
 
 10daysclothingsrbija.com
@@ -97,3 +96,58 @@ vejashoessrbija.com
 vivobarefootsrbija.net
 wonderssrbija.com
 woolrichsrbija.com
+
+### Scam domains end
+
+### typosquatting domains start
+# list initialy collected by https://twitter.com/milos_rs_
+# more info at https://bezbedanbalkan.net/thread-846.html
+
+aairserbia.com
+aiirserbia.com
+aiorserbia.com
+airderbia.com
+airesrbia.com
+airrserbia.com
+airsebia.com
+airsebria.com
+airserbbia.com
+airserbi.com
+airserbiaa.com
+airserbiaq.com
+airserbias.com
+airserbiax.com
+airserbiaz.com
+airserbiia.com
+airserbija.com
+airserbika.com
+airserbis.com
+airserbiw.com
+airserbka.com
+airserbkia.com
+airserboa.com
+airserboia.com
+airserbvia.com
+airserdbia.com
+airsergbia.com
+airsergia.com
+airseriba.com
+airserrbia.com
+airservbia.com
+airservia.com
+airsrbia.com
+aiserbia.com
+aitserbia.com
+aiurserbia.com
+ajrserbia.com
+akirserbia.com
+akrserbia.com
+alrserbia.com
+aoirserbia.com
+aorserbia.com
+ariserbia.com
+arserbia.com
+auirserbia.com
+irserbia.com
+
+### typosquatting domains end
