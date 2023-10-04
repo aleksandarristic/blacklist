@@ -4,4 +4,8 @@ A collection of various blacklists of hosts for use in pihole or similar softwar
 
 ### Index of lists
 
-* [scam_hosts_srb.txt](/lists/scam_hosts_srb.txt) - Various scam websites targeting serbian internet users, as well as typosquatting domains (right now only for air serbia website) (collected by [@milos_rs_](https://twitter.com/milos_rs_ "@milos_rs_ on X"))
+* [scam_hosts_srb.txt](/lists/scam_hosts_srb.txt) - Various scam, fraud and typosquatting websites targeting serbian internet users (collected by members of https://bezbedanbalkan.net/ forum))
+
+### Authors of original lists
+* [@milos_rs_](https://twitter.com/milos_rs_ "@milos_rs_ on X")
+* [maxxa](https://bezbedanbalkan.net/user-5.html "maxxa on Bezbedanbalkant.net")
