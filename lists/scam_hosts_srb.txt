@@ -535,3 +535,16 @@ zooexchangedilemmatwice.com
 anketi-rs.online
 
 ### phishing domains end
+
+
+### iot domains start
+#
+#
+
+cbphe.com
+cbpheback.com
+ycxrl.com
+dcylog.com
+flyermobi.com
+
+### iot domains end
