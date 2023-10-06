@@ -3,7 +3,7 @@
 A collection of various blacklists of hosts for use in pihole or similar software.
 
 ### Index of lists
-* [scam_hosts_srb.txt](/lists/scam_hosts_srb.txt) - Various scam, fraud and typosquatting websites targeting serbian internet users (collected by members of https://bezbedanbalkan.net/ forum)
+* [scam_hosts_srb.txt](/lists/scam_hosts_srb.txt) - Various scam, fraud, phishing, typosquatting websites targeting serbian internet users (collected by members of https://bezbedanbalkan.net/ forum) - currently contains 510 unique exact domains
 
 ### Authors of original lists
 * [@milos_rs_](https://twitter.com/milos_rs_ "@milos_rs_ on X")
