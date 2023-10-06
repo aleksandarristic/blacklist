@@ -527,3 +527,11 @@ zebragrainhostwrite.click
 zooexchangedilemmatwice.com
 
 ### fraud domains end
+
+### phishing domains start
+#
+#
+
+anketi-rs.online
+
+### phishing domains end
