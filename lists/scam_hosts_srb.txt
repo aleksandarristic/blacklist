@@ -1001,6 +1001,10 @@ anketi-rs.online
 rsposta.top
 posto-rs.com
 posta.mytracking-rs.com
+postars.lat
+postars.cc
+postaer-rspt.top
+postaer-rsap.top
 
 ### phishing domains end
 
