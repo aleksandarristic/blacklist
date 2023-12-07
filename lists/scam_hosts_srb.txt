@@ -1003,6 +1003,7 @@ posto-rs.com
 posta.mytracking-rs.com
 postars.lat
 postars.cc
+postars.art
 postaer-rspt.top
 postaer-rsap.top
 
