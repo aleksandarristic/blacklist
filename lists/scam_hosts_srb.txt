@@ -1026,6 +1026,9 @@ postars.art
 postars.online
 postaer-rspt.top
 postaer-rsap.top
+postars.biz
+postars.pics
+postars.xyz
 
 ### phishing domains end
 
