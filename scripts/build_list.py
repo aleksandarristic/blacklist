@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import logging
 import argparse
 import json
-
+import logging
+import os
+import sys
 
 SUBS = 'subs.json'
 LOG_FILE = "build_list.log"
-
 
 log = logging.getLogger(__file__)
 
@@ -22,26 +20,26 @@ def configure_logging(debug=False):
     file_handler = logging.FileHandler(filename=LOG_FILE)
     handlers = [file_handler, logging.StreamHandler(sys.stdout)]
 
-    logging.basicConfig(
-        level=logging.DEBUG if debug else logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        datefmt="%d-%b-%y %H:%M:%S",
-        handlers=handlers,
-    )
+    logging.basicConfig(level=logging.DEBUG if debug else logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s", datefmt="%d-%b-%y %H:%M:%S", handlers=handlers, )
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-s', '--section', action='store', dest='section', help='Section name (eg: "Scam" or "typosquatting").')
-    parser.add_argument('-f', '--filename', action='store', dest='filename', help='File with "raw" data. See raw.md for supported formats and substitutions.')
-    parser.add_argument('-t', '--target', action='store', dest='target', help='Target filename. If exists, it will be updated with the new content.')
-    
-    parser.add_argument('--run', action='store_true', dest='run', default=False, help='Run the script. Otherwise just quit.')
+    parser.add_argument('-s', '--section', action='store', dest='section',
+                        help='Section name (eg: "Scam" or "typosquatting").')
+    parser.add_argument('-f', '--filename', action='store', dest='filename',
+                        help='File with "raw" data. See raw.md for supported formats and substitutions.')
+    parser.add_argument('-t', '--target', action='store', dest='target',
+                        help='Target filename. If exists, it will be updated with the new content.')
+
+    parser.add_argument('--run', action='store_true', dest='run', default=False,
+                        help='Run the script. Otherwise just quit.')
     parser.add_argument('--debug', action='store_true', dest='debug', default=False, help='Debug mode. Writes a lot.')
 
     args = parser.parse_args()
-    
+
     configure_logging(args.debug)
     log.debug(args)
     return args
@@ -50,7 +48,7 @@ def parse_args():
 def load_subs(filename):
     with open(filename, 'r') as f:
         return json.loads(f.read())
-    
+
 
 def load_new_data(filename):
     try:
@@ -107,7 +105,7 @@ def parse_target(target_file):
 
         if l and current_section_name:
             result[current_section_name]['items'].append(l)
-    
+
     log.debug(result)
     return result
 
@@ -143,7 +141,7 @@ def main():
         log.info(f'Target file "{args.target}" does not exist and will be created.')
         with open(args.target, 'w') as f:
             print('', file=f)
-        
+
     data = parse_target(args.target)
 
     if args.section in data.keys():
@@ -153,27 +151,25 @@ def main():
 
     else:
         log.info(f'Section "{args.section}" was not found in "{args.target}". New section will be created.')
-        data[args.section] = {
-            'items': [],
-            'comments': []
-        }
+        data[args.section] = {'items': [], 'comments': []}
         initial_record_count = 0
 
     new_data = load_new_data(args.filename)
     log.debug(f'Loaded {len(new_data)} new records.')
-    
+
     data[args.section]['items'].extend(new_data)
-    data[args.section]['items'] = sorted(list(set(data[args.section]['items']))) # ugly hack to have a sorted list of unique lines
+    data[args.section]['items'] = sorted(
+        list(set(data[args.section]['items'])))  # ugly hack to have a sorted list of unique lines
     updated_count = len(data[args.section]['items'])
 
     log.debug(f'Updated record count is: {updated_count}')
     log.debug(f'Updated data: {data}')
-    log.info(f'Added {updated_count - initial_record_count} new unique records to the section "{args.section}" in file "{args.target}".')
+    log.info(
+        f'Added {updated_count - initial_record_count} new unique records to the section "{args.section}" in file "{args.target}".')
     log.info(f'Writing data to "{args.target}"...')
     write_data(data, args.target)
-    
-    log.info('All done!')
 
+    log.info('All done!')
 
 
 if __name__ == '__main__':
