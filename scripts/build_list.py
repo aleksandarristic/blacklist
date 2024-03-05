@@ -21,7 +21,8 @@ def configure_logging(debug=False):
     handlers = [file_handler, logging.StreamHandler(sys.stdout)]
 
     logging.basicConfig(level=logging.DEBUG if debug else logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s", datefmt="%d-%b-%y %H:%M:%S", handlers=handlers, )
+                        format="%(asctime)s - %(levelname)s - %(message)s", datefmt="%d-%b-%y %H:%M:%S",
+                        handlers=handlers, )
 
 
 def parse_args():
