@@ -13,7 +13,7 @@ LOG_FILE = "build_list.log"
 log = logging.getLogger(__file__)
 
 
-def configure_logging(debug=False):
+def configure_logging(debug: bool = False) -> None:
     for handler in logging.root.handlers[:]:
         logging.root.removeHandler(handler)
 
@@ -25,7 +25,7 @@ def configure_logging(debug=False):
                         handlers=handlers, )
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-s', '--section', action='store', dest='section',
@@ -46,25 +46,25 @@ def parse_args():
     return args
 
 
-def load_subs(filename):
+def load_subs(filename: str) -> dict:
     with open(filename, 'r') as f:
         return json.loads(f.read())
 
 
-def load_new_data(filename):
+def load_new_data(filename: str) -> list:
     try:
         with open(filename, 'r') as f:
             data = []
             lines = f.readlines()
-            for l in lines:
-                data.append(parse_line(l))
+            for line in lines:
+                data.append(parse_line(line))
             return data
     except Exception as e:
         log.error(f'Could not load "{filename}": {e}')
         return []
 
 
-def parse_line(line):
+def parse_line(line: str) -> str:
     # assume ' '-separated domain is the first word in the line
     if ' ' in line:
         line = line.split(' ')[0].lstrip()
@@ -76,7 +76,7 @@ def parse_line(line):
     return line
 
 
-def parse_target(target_file):
+def parse_target(target_file: str) -> dict:
     """
     Parses target file for existing sections and their corresponding entries
     """
@@ -85,45 +85,47 @@ def parse_target(target_file):
     with open(target_file, 'r') as f:
         lines = f.readlines()
 
-    for l in lines:
-        l = l.strip()
-        if l.startswith('###') and l.endswith('domains start'):
+    for line in lines:
+        line = line.strip()
+        if line.startswith('###') and line.endswith('domains start'):
             try:
-                current_section_name = l.split(' ')[1]
+                current_section_name = line.split(' ')[1]
                 result[current_section_name] = {'items': [], 'comments': []}
                 continue
             except Exception as e:
                 log.error(f'Could not identify section start: {e}')
                 continue
 
-        if l.startswith('###') and l.endswith('domains end'):
+        if line.startswith('###') and line.endswith('domains end'):
             current_section_name = None
             continue
 
-        if l.startswith('#') and current_section_name:
-            result[current_section_name]['comments'].append(l)
+        if line.startswith('#') and current_section_name:
+            result[current_section_name]['comments'].append(line)
             continue
 
-        if l and current_section_name:
-            result[current_section_name]['items'].append(l)
+        if line and current_section_name:
+            result[current_section_name]['items'].append(line)
 
     log.debug(result)
     return result
 
 
-def write_data(data, target):
+def write_data(data: dict, target: str) -> None:
     with open(target, 'w') as f:
         for section, section_data in data.items():
             log.debug(f'Writing section "{section}".')
             f.write(f'\n### {section} domains start\n')
 
             for comment_line in section_data['comments']:
-                if not comment_line.endswith('\n'): comment_line += '\n'
+                if not comment_line.endswith('\n'):
+                    comment_line += '\n'
                 f.write(comment_line)
             f.write('\n')
 
             for line in section_data['items']:
-                if not line.endswith('\n'): line += '\n'
+                if not line.endswith('\n'):
+                    line += '\n'
                 f.write(line)
 
             f.write('\n')
@@ -132,7 +134,7 @@ def write_data(data, target):
         log.debug('All done')
 
 
-def main():
+def main() -> None:
     args = parse_args()
     if not args.run or not (args.section and args.filename and args.target):
         log.info('Nothing to do, bye!')
@@ -165,8 +167,8 @@ def main():
 
     log.debug(f'Updated record count is: {updated_count}')
     log.debug(f'Updated data: {data}')
-    log.info(
-        f'Added {updated_count - initial_record_count} new unique records to the section "{args.section}" in file "{args.target}".')
+    log.info(f'Added {updated_count - initial_record_count} new unique records to the section "{args.section}" in file '
+             f'"{args.target}".')
     log.info(f'Writing data to "{args.target}"...')
     write_data(data, args.target)
 
