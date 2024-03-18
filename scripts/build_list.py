@@ -60,13 +60,13 @@ def parse_args() -> argparse.Namespace:
     return args
 
 
-def load_subs(filename: AnyStr) -> Dict[AnyStr:AnyStr]:
+def load_subs(filename: AnyStr) -> Dict[AnyStr, AnyStr]:
     """
     Load substitution map from file.
     :param filename: File with substitutions.
     :type filename: AnyStr
     :return: Map of substitutions
-    :rtype: Dict[AnyStr:AnyStr]
+    :rtype: Dict[AnyStr, AnyStr]
     """
     with open(filename, 'r') as f:
         return json.loads(f.read())
@@ -113,7 +113,7 @@ def parse_line(line: AnyStr) -> AnyStr:
     return line
 
 
-def parse_target(target_file: AnyStr) -> Dict[AnyStr:Dict[AnyStr:List[AnyStr]]]:
+def parse_target(target_file: AnyStr) -> Dict[AnyStr, Dict[AnyStr, List[AnyStr]]]:
     """
     Parses the target file for existing sections and their corresponding entries.
     The returned data will have a section name as the first level key and a dictionary
@@ -122,7 +122,7 @@ def parse_target(target_file: AnyStr) -> Dict[AnyStr:Dict[AnyStr:List[AnyStr]]]:
     :param target_file: Filename of the file to read from
     :type target_file: AnyStr
     :return: A map with section names as the key and section data as value
-    :rtype: Dict[AnyStr:Dict[AnyStr:List[AnyStr]]]
+    :rtype: Dict[AnyStr, Dict[AnyStr, List[AnyStr]]]
     """
     result = {}
     current_section_name = None
@@ -155,11 +155,11 @@ def parse_target(target_file: AnyStr) -> Dict[AnyStr:Dict[AnyStr:List[AnyStr]]]:
     return result
 
 
-def write_data(data: Dict[AnyStr:Dict[AnyStr:List[AnyStr]]], target: AnyStr) -> None:
+def write_data(data: Dict[AnyStr, Dict[AnyStr, List[AnyStr]]], target: AnyStr) -> None:
     """
     Write the data structure to the blacklist file.
     :param data: Data to write.
-    :type data: Dict[AnyStr:Dict[AnyStr:List[AnyStr]]]
+    :type data: Dict[AnyStr, Dict[AnyStr, List[AnyStr]]]
     :param target:
     :type target: AnyStr
     :return:
