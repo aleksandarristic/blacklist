@@ -104,7 +104,8 @@ def parse_line(line: AnyStr) -> AnyStr:
     """
     # assume ' '-separated domain is the first word in the line
     if ' ' in line:
-        line = line.split(' ')[0].lstrip()
+        line = line.split(' ')[0]
+    line = line.strip()
 
     # do substitutions
     for orig, sub in load_subs(SUBS).items():
@@ -149,7 +150,7 @@ def parse_target(target_file: AnyStr) -> Dict[AnyStr, Dict[AnyStr, List[AnyStr]]
             continue
 
         if line and current_section_name:
-            result[current_section_name]['items'].append(line)
+            result[current_section_name]['items'].append(line.strip())
 
     log.debug(result)
     return result
@@ -210,13 +211,20 @@ def main() -> None:
         data[args.section] = {'items': [], 'comments': []}
         initial_record_count = 0
 
-    new_data = load_new_data(args.filename)
-    log.debug(f'Loaded {len(new_data)} new records.')
+    # set of entries from update file
+    new_entries = set(load_new_data(args.filename))
 
-    data[args.section]['items'].extend(new_data)
-    data[args.section]['items'] = sorted(
-        list(set(data[args.section]['items'])))  # ugly hack to have a sorted list of unique lines
-    updated_count = len(data[args.section]['items'])
+    # set of entries already present in the list
+    all_entries = set(data[args.section]['items'])
+    log.debug(f'Loaded {len(new_entries)} new records.')
+
+    # union
+    all_entries.update(new_entries)
+
+    # create a sorted list of entries
+    all_entries = sorted(all_entries)
+    data[args.section]['items'] = all_entries
+    updated_count = len(all_entries)
 
     log.debug(f'Updated record count is: {updated_count}')
     log.debug(f'Updated data: {data}')
