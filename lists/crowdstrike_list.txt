@@ -1,0 +1,39 @@
+
+### Crowdstrike domains start
+# list of Crowdstrike look-alike domains in the aftermath of Crowdstrike Falcon BSOD bug
+# gathered from multiple online sources
+
+crashstrike.com
+crowdfalcon-immed-update.com
+crowdstrike-bsod.com
+crowdstrike-helpdesk.com
+crowdstrike.buzz
+crowdstrike.phpartners.org
+crowdstrike0day.com
+crowdstrikebluescreen.com
+crowdstrikeblueteam.com
+crowdstrikebsod.com
+crowdstrikeclaim.com
+crowdstrikedoomsday.com
+crowdstrikedown.com
+crowdstrikedown.site
+crowdstrikefix.com
+crowdstrikefix.zip
+crowdstrikeodayl.com
+crowdstrikeoutage.info
+crowdstrikereport.com
+crowdstriketoken.com
+crowdstrikeupdate.com
+crowdstuck.org
+fix-crowdstrike-apocalypse.com
+fix-crowdstrike-bsod.com
+microsoftcrowdstrike.com
+supportportal-crowdstrike-com.translate.goog
+whatiscrowdstrike.com
+www.crowdstrike0day.com
+www.crowdstrikefix.com
+www.crowdstriketoken.com
+www.fix-crowdstrike-bsod.com
+www.microsoftcrowdstrike.com
+
+### Crowdstrike domains end

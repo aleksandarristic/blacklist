@@ -4,8 +4,10 @@ A collection of various blacklists of hosts for use in pihole or similar softwar
 
 ### Index of lists
 * [scam_hosts_srb.txt](/lists/scam_hosts_srb.txt) - Various scam, fraud, phishing, typosquatting websites targeting serbian internet users (collected by members of https://bezbedanbalkan.net/ forum) - currently contains 515 unique exact domains
+* [crowdstrike_list.txt](/lists/crowdstrike_list.txt) - List containing Crowdstrike lookalike domains in the aftermath of Crowdstrike Falcon BSOD bug
+* [all.txt](/lists/all.txt) - Compiled list of all other lists
 
-### Authors of original lists
+### Authors of original list used for `scam_hosts_srb.txt`
 * [@milos_rs_](https://twitter.com/milos_rs_ "@milos_rs_ on X")
 * [maxxa](https://bezbedanbalkan.net/user-5.html "maxxa on Bezbedanbalkant.net")
 
