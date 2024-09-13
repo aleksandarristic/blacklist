@@ -1,0 +1,1 @@
+python build_list.py -f .\update.txt -s Scam -t ..\lists\scam_hosts_srb.txt --run
