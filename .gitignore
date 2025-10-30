@@ -1,0 +1,14 @@
+# ignore vs code settings folder
+.vscode
+# ignore log files and update text
+scripts/*.log
+scripts/update.txt
+
+#ignore python cache files and artifacts
+__pycache__/
+*.pyc
+
+#ignore virtual environment folder
+venv/
+env/
+.venv/
