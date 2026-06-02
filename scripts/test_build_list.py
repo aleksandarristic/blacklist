@@ -18,7 +18,7 @@ class TestParseLine(unittest.TestCase):
 
     def setUp(self):
         """Reset the substitutions cache before each test."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
 
     def test_parse_line_simple(self):
         """Test parsing a simple domain without substitutions."""
@@ -47,9 +47,19 @@ class TestParseLine(unittest.TestCase):
     def test_parse_line_strips_whitespace(self):
         """Test that leading/trailing whitespace is stripped."""
         with patch('build_list.load_subs', return_value={}):
-            # Note: Leading whitespace causes the line to be split on space, 
-            # resulting in empty string before first space
             result = build_list.parse_line("example.com  \n")
+            self.assertEqual(result, "example.com")
+
+    def test_parse_line_leading_whitespace(self):
+        """Leading whitespace must not drop the domain (regression)."""
+        with patch('build_list.load_subs', return_value={}):
+            result = build_list.parse_line("   example.com\n")
+            self.assertEqual(result, "example.com")
+
+    def test_parse_line_tab_separated(self):
+        """Tab-separated lines: the domain is the first field."""
+        with patch('build_list.load_subs', return_value={}):
+            result = build_list.parse_line("example.com\t127.0.0.1\n")
             self.assertEqual(result, "example.com")
 
     def test_parse_line_empty_string(self):
@@ -64,7 +74,7 @@ class TestLoadSubs(unittest.TestCase):
 
     def setUp(self):
         """Reset the substitutions cache before each test."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
 
     def test_load_subs_valid_json(self):
         """Test loading valid JSON substitutions."""
@@ -88,7 +98,7 @@ class TestLoadSubs(unittest.TestCase):
 
     def test_load_subs_file_not_found(self):
         """Test handling of missing substitutions file."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
         with patch('builtins.open', side_effect=FileNotFoundError()):
             with patch('build_list.log') as mock_log:
                 result = build_list.load_subs('missing.json')
@@ -97,7 +107,7 @@ class TestLoadSubs(unittest.TestCase):
 
     def test_load_subs_invalid_json(self):
         """Test handling of invalid JSON."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
         with patch('builtins.open', mock_open(read_data='invalid json{')):
             with patch('build_list.log') as mock_log:
                 result = build_list.load_subs('bad.json')
@@ -106,7 +116,7 @@ class TestLoadSubs(unittest.TestCase):
 
     def test_load_subs_io_error(self):
         """Test handling of I/O errors."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
         with patch('builtins.open', side_effect=IOError('Disk error')):
             with patch('build_list.log') as mock_log:
                 result = build_list.load_subs('error.json')
@@ -119,7 +129,7 @@ class TestLoadNewData(unittest.TestCase):
 
     def setUp(self):
         """Reset the substitutions cache before each test."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
 
     def test_load_new_data_valid_file(self):
         """Test loading data from a valid file."""
@@ -225,7 +235,7 @@ domain.com
                 mock_log.warning.assert_called_once()
 
     def test_parse_target_malformed_section_start(self):
-        """Test handling of malformed section start."""
+        """Test handling of malformed section start (no section name)."""
         test_content = """
 ### domains start
 domain.com
@@ -234,10 +244,22 @@ domain.com
         with patch('builtins.open', mock_open(read_data=test_content)):
             with patch('build_list.log') as mock_log:
                 result = build_list.parse_target('target.txt')
-                # The line "### domains start" has enough parts that split(' ')[1] 
-                # returns "domains", so it creates a section without error
-                # Let's check that content outside section is logged as warning
-                self.assertTrue(mock_log.warning.called or mock_log.error.called or len(result) > 0)
+                # There is no name between '###' and 'domains start', so the
+                # section is rejected with an error and no bogus section created.
+                mock_log.error.assert_called()
+                self.assertEqual(result, {})
+
+    def test_parse_target_multiword_section_name(self):
+        """Test that section names containing spaces are captured in full."""
+        test_content = """
+### My Section domains start
+domain.com
+### My Section domains end
+"""
+        with patch('builtins.open', mock_open(read_data=test_content)):
+            result = build_list.parse_target('target.txt')
+            self.assertIn('My Section', result)
+            self.assertEqual(result['My Section']['items'], ['domain.com'])
 
     def test_parse_target_empty_file(self):
         """Test parsing an empty file."""
@@ -340,7 +362,7 @@ class TestIntegration(unittest.TestCase):
     def setUp(self):
         """Create temporary directory for test files."""
         self.test_dir = tempfile.mkdtemp()
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
 
     def tearDown(self):
         """Clean up temporary directory."""
@@ -437,7 +459,7 @@ class TestEdgeCases(unittest.TestCase):
 
     def setUp(self):
         """Reset the substitutions cache before each test."""
-        build_list._subs_cache = None
+        build_list._subs_cache = {}
 
     def test_parse_line_with_multiple_spaces(self):
         """Test line with multiple consecutive spaces."""

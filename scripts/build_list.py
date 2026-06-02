@@ -7,7 +7,7 @@ import logging
 import os
 import sys
 
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 SUBS = 'subs.json'
 LOG_FILE = 'build_list.log'
@@ -16,8 +16,8 @@ COMMENTS_KEY = 'comments'
 
 log = logging.getLogger(__file__)
 
-# Cache for substitutions to avoid repeated file I/O
-_subs_cache: Optional[Dict[str, str]] = None
+# Cache for substitutions to avoid repeated file I/O (keyed by filename)
+_subs_cache: Dict[str, Dict[str, str]] = {}
 
 
 def configure_logging(debug: bool = False) -> None:
@@ -73,21 +73,20 @@ def load_subs(filename: str) -> Dict[str, str]:
     :return: Map of substitutions
     :rtype: Dict[str, str]
     """
-    global _subs_cache
-    if _subs_cache is None:
+    if filename not in _subs_cache:
         try:
             with open(filename, 'r', encoding='utf-8') as f:
-                _subs_cache = json.load(f)
+                _subs_cache[filename] = json.load(f)
         except FileNotFoundError:
             log.error(f'Substitutions file not found: "{filename}"')
-            _subs_cache = {}
+            _subs_cache[filename] = {}
         except json.JSONDecodeError as e:
             log.error(f'Invalid JSON in substitutions file "{filename}": {e}')
-            _subs_cache = {}
+            _subs_cache[filename] = {}
         except IOError as e:
             log.error(f'Could not read substitutions file "{filename}": {e}')
-            _subs_cache = {}
-    return _subs_cache if _subs_cache is not None else {}
+            _subs_cache[filename] = {}
+    return _subs_cache[filename]
 
 
 def load_new_data(filename: str) -> List[str]:
@@ -119,10 +118,10 @@ def parse_line(line: str) -> str:
     :return: Returns a parsed line
     :rtype: str
     """
-    # assume ' '-separated domain is the first word in the line
-    if ' ' in line:
-        line = line.split(' ')[0]
-    line = line.strip()
+    # assume the domain is the first whitespace-separated word in the line
+    # split() handles spaces, tabs, and leading/trailing whitespace
+    parts = line.split()
+    line = parts[0] if parts else ''
 
     # do substitutions (loaded once and cached)
     subs = load_subs(SUBS)
@@ -151,13 +150,14 @@ def parse_target(target_file: str) -> Dict[str, Dict[str, List[str]]]:
     for line in lines:
         line = line.strip()
         if line.startswith('###') and line.endswith('domains start'):
-            try:
-                current_section_name = line.split(' ')[1]
-                result[current_section_name] = {ITEMS_KEY: [], COMMENTS_KEY: []}
+            # section name is everything between the '###' marker and 'domains start'
+            section_name = line[len('###'):-len('domains start')].strip()
+            if not section_name:
+                log.error(f'Could not identify section name in: "{line}"')
                 continue
-            except (IndexError, ValueError) as e:
-                log.error(f'Could not identify section start: {e}')
-                continue
+            current_section_name = section_name
+            result[current_section_name] = {ITEMS_KEY: [], COMMENTS_KEY: []}
+            continue
 
         if line.startswith('###') and line.endswith('domains end'):
             current_section_name = None
