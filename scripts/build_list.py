@@ -146,41 +146,37 @@ def parse_target(target_file: str) -> Dict[str, Dict[str, List[str]]]:
     current_section_name = None
     try:
         with open(target_file, 'r', encoding='utf-8') as f:
-            lines = f.readlines()
+            for line in f:
+                line = line.strip()
+                if line.startswith('###') and line.endswith('domains start'):
+                    section_name = line.removeprefix('###').removesuffix('domains start').strip()
+                    if not section_name:
+                        log.error(f'Could not identify section name in: "{line}"')
+                        continue
+                    current_section_name = section_name
+                    result[current_section_name] = {ITEMS_KEY: [], COMMENTS_KEY: []}
+                    continue
+
+                if line.startswith('###') and line.endswith('domains end'):
+                    current_section_name = None
+                    continue
+
+                if line.startswith('#') and current_section_name:
+                    result[current_section_name][COMMENTS_KEY].append(line)
+                    continue
+
+                if line and current_section_name:
+                    result[current_section_name][ITEMS_KEY].append(line)
+                    continue
+
+                if line and not current_section_name:
+                    log.warning(f'Content found outside of any section: "{line[:50]}"')
     except FileNotFoundError:
         log.error(f'Target file not found: "{target_file}"')
         return {}
     except IOError as e:
         log.error(f'Could not read target file "{target_file}": {e}')
         return {}
-
-    for line in lines:
-        line = line.strip()
-        if line.startswith('###') and line.endswith('domains start'):
-            # section name is everything between the '###' marker and 'domains start'
-            section_name = line[len('###'):-len('domains start')].strip()
-            if not section_name:
-                log.error(f'Could not identify section name in: "{line}"')
-                continue
-            current_section_name = section_name
-            result[current_section_name] = {ITEMS_KEY: [], COMMENTS_KEY: []}
-            continue
-
-        if line.startswith('###') and line.endswith('domains end'):
-            current_section_name = None
-            continue
-
-        if line.startswith('#') and current_section_name:
-            result[current_section_name][COMMENTS_KEY].append(line)
-            continue
-
-        if line and current_section_name:
-            result[current_section_name][ITEMS_KEY].append(line)
-            continue
-        
-        # Warn about content outside of sections
-        if line and not current_section_name:
-            log.warning(f'Content found outside of any section: "{line[:50]}"')
 
     log.debug(result)
     return result
