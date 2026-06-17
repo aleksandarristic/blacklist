@@ -9,7 +9,7 @@ import sys
 
 from typing import Dict, List
 
-SUBS = 'subs.json'
+SUBS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'subs.json')
 LOG_FILE = 'build_list.log'
 ITEMS_KEY = 'items'
 COMMENTS_KEY = 'comments'
@@ -144,8 +144,15 @@ def parse_target(target_file: str) -> Dict[str, Dict[str, List[str]]]:
     """
     result = {}
     current_section_name = None
-    with open(target_file, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
+    try:
+        with open(target_file, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        log.error(f'Target file not found: "{target_file}"')
+        return {}
+    except IOError as e:
+        log.error(f'Could not read target file "{target_file}": {e}')
+        return {}
 
     for line in lines:
         line = line.strip()
@@ -219,7 +226,11 @@ def main() -> None:
 
     if args.target and not os.path.exists(args.target):
         log.info(f'Target file "{args.target}" does not exist and will be created.')
-        open(args.target, 'w', encoding='utf-8').close()
+        try:
+            open(args.target, 'w', encoding='utf-8').close()
+        except IOError as e:
+            log.error(f'Could not create target file "{args.target}": {e}')
+            sys.exit(1)
 
     data = parse_target(args.target)
 
