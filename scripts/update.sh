@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-section="${1:-Scam}"
-list="${2:-../lists/scam_hosts_srb.txt}"
+input_file="${1:-./update.txt}"
+section="${2:-Scam}"
+list="${3:-../lists/scam_hosts_srb.txt}"
 
-./build_list.py -f ./update.txt -s ${section} -t ${list} --run
+./build_list.py -f ${input_file} -s ${section} -t ${list} --run
