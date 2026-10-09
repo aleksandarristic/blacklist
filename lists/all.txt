@@ -2,12 +2,14 @@
 ### Scam domains start
 # list initialy collected by https://twitter.com/milos_rs_
 # More info at https://bezbedanbalkan.net/thread-835.html
-
 #
 ###
+
 10daysclothingsrbija.com
 1moresrbija.com
 7forallmankindsrbija.com
+EIDGOV.CO
+MTS-SRBIJA.COM
 REAKTIVACIJA-LNTESAAPP.COM
 aairserbia.com
 abandonregulardriftrepeat.com
