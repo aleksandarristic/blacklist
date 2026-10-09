@@ -3,7 +3,7 @@
 # list of Crowdstrike look-alike domains in the aftermath of Crowdstrike Falcon BSOD bug
 # gathered from multiple online sources
 
-bsodsm8rLIxamzgjedu.com
+bsodsm8rlixamzgjedu.com
 clownstrike.co
 clownstrike.co.uk
 crashstrike.com

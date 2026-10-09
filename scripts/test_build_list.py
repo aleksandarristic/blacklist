@@ -50,6 +50,12 @@ class TestParseLine(unittest.TestCase):
             result = build_list.parse_line("example.com  \n")
             self.assertEqual(result, "example.com")
 
+    def test_parse_line_lowercases(self):
+        """Domains are case insensitive, so output is lowercased."""
+        with patch('build_list.load_subs', return_value={}):
+            result = build_list.parse_line("Example.COM\n")
+            self.assertEqual(result, "example.com")
+
     def test_parse_line_leading_whitespace(self):
         """Leading whitespace must not drop the domain (regression)."""
         with patch('build_list.load_subs', return_value={}):

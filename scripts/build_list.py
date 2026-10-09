@@ -113,6 +113,7 @@ def parse_line(line: str) -> str:
     Parses a line to apply the following transformations:
     - Take the part of the line just up until the first space character (assumes space-separated lines format)
     - Apply substitutions as defined in the substitutions file.
+    - Lowercase the result (domain names are case insensitive).
     :param line: A line to parse
     :type line: str
     :return: Returns a parsed line
@@ -128,7 +129,7 @@ def parse_line(line: str) -> str:
     for orig, sub in subs.items():
         line = line.replace(orig, sub)
 
-    return line
+    return line.lower()
 
 
 def parse_target(target_file: str) -> Dict[str, Dict[str, List[str]]]:
@@ -244,7 +245,7 @@ def main() -> None:
     new_entries = set(load_new_data(args.filename))
 
     # set of entries already present in the list
-    all_entries = set(data[args.section][ITEMS_KEY])
+    all_entries = {entry.lower() for entry in data[args.section][ITEMS_KEY]}
     log.debug(f'Loaded {len(new_entries)} new records.')
 
     # union

@@ -8,9 +8,6 @@
 10daysclothingsrbija.com
 1moresrbija.com
 7forallmankindsrbija.com
-EIDGOV.CO
-MTS-SRBIJA.COM
-REAKTIVACIJA-LNTESAAPP.COM
 aairserbia.com
 abandonregulardriftrepeat.com
 ableeducatebombtheory.com
@@ -572,6 +569,7 @@ ecologytoolannouncecamera.click
 economyfurnacerailbelow.com
 eggfriendacquirepage.com
 egolawnmowerssrbija.com
+eidgov.co
 eileenfishersrbija.com
 elegant-nobel.45-74-61-10.plesk.page
 elevenparissrbija.com
@@ -1195,6 +1193,7 @@ movieplusacces.com
 mrchristmas-srbija.com
 mrchristmassrbija.com
 mredi-xverty.com
+mts-srbija.com
 muchfemaleminorgoat.com
 muchshymangojeans.com
 muckbootsrbija.com
@@ -1540,6 +1539,7 @@ randomspoilstayvan.com
 rawvolcanomixtureuncover.click
 raybansrbija.com
 razersrbija.com
+reaktivacija-lntesaapp.com
 rebeccaminkoffsrbija.com
 recipepotterynoisefollow.click
 redskinssrbija.com
@@ -2606,7 +2606,7 @@ flyermobi.com
 # list of Crowdstrike look-alike domains in the aftermath of Crowdstrike Falcon BSOD bug
 # gathered from multiple online sources
 
-bsodsm8rLIxamzgjedu.com
+bsodsm8rlixamzgjedu.com
 clownstrike.co
 clownstrike.co.uk
 crashstrike.com
